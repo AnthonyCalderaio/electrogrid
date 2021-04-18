@@ -1,0 +1,1 @@
+cd ios && open electrogrid.xcworkspace && cd ..
