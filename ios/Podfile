@@ -8,6 +8,8 @@ target 'electrogrid' do
 
   use_react_native!(:path => config["reactNativePath"])
 
+  pod 'react-native-bluetooth-classic', :path => '../node_modules/react-native-bluetooth-classic'
+
   target 'electrogridTests' do
     inherit! :complete
     # Pods for testing
