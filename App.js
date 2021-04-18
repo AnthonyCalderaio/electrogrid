@@ -7,6 +7,7 @@ import {NavigationContainer} from '@react-navigation/native';
 
 import Home from './Home'
 import Battle from './Battle'
+import Seek from './Seek'
 
 // function blueToothScreen() {
   
@@ -100,7 +101,8 @@ export default class App extends Component {
       <NavigationContainer>
         <Tab.Navigator>
           <Tab.Screen name="Home" component={Home} />
-          <Tab.Screen name="Battle" component={Battle} />
+          <Tab.Screen name="Seek" component={Seek} />
+          {/* <Tab.Screen name="Battle" component={Battle} /> */}
         </Tab.Navigator>
       </NavigationContainer>
       ////////////////////
