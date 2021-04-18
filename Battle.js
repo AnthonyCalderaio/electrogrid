@@ -71,10 +71,14 @@ export default class Battle extends Component {
         
 
         let list = this.state.deviceList
-        list.push(device.name)
-        this.setState({
-          deviceList: list
-        })
+        if(!list.includes(device.name)){
+
+          list.push(device.name)
+          this.setState({
+            deviceList: list
+          })
+        }
+        
         
         // deviceList.push(device.name)
 
