@@ -8,6 +8,7 @@ import {NavigationContainer} from '@react-navigation/native';
 import Home from './Home'
 import Battle from './Battle'
 import Seek from './Seek'
+import characterSummary from './character-summary'
 
 // function blueToothScreen() {
   
@@ -98,10 +99,11 @@ export default class App extends Component {
   }
   render() {
     return (
-      <NavigationContainer>
-        <Tab.Navigator>
+      <NavigationContainer >
+        <Tab.Navigator >
           <Tab.Screen name="Home" component={Home} />
           <Tab.Screen name="Seek" component={Seek} />
+          <Tab.Screen name="gear" component={characterSummary}/>
           {/* <Tab.Screen name="Battle" component={Battle} /> */}
         </Tab.Navigator>
       </NavigationContainer>
