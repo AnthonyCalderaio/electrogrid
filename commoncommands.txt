@@ -1,0 +1,2 @@
+Clean whole pod file
+$rm -rf ~/Library/Caches/CocoaPods Pods ~/Library/Developer/Xcode/DerivedData/*; pod deintegrate; pod setup; pod install;
