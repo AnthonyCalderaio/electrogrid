@@ -21,25 +21,6 @@ import Seek from './Seek';
 import characterSummary from './character-summary';
 import Inventory from './Inventory'
 
-
-// function blueToothScreen() {
-
-// }
-
-// function home() {
-//   function handleInput(text1, type){
-//     // storeData(text1)
-//     // const [text1s, setText] = React.useState('');
-//     // return setText(text1)
-//     _storeData = async () => {
-//       try {
-//         await AsyncStorage.setItem(type, data);
-//       } catch (error) {
-//         // Error saving data
-//       }
-//     };
-
-//   }
 console.disableYellowBox = true;
 function getStorage() {
   console.log('hi');
@@ -56,25 +37,6 @@ function getStorage() {
     }
   };
 }
-// onPressStartTheGame(){
-//   console.log("Pushed button Start the Game!")
-//   //dispatch({ type: ADD_PLAYER_NAME, playerNumber: 5, playerName: "Sandro" })
-// }
-
-// return (
-//   <View style={styles.container}>
-//     <Text>Username:</Text>
-//     <TextInput
-//                   style={{height: 40,backgroundColor: 'azure', fontSize: 20}}
-//                   placeholder="Type here to translate!"
-//                   onChangeText={(text) => handleInput({text},'username')}
-//               />
-//     {/* <Text>Level:</Text>
-//     <Text>XP:</Text> */}
-//     <Button title="clickMe" onClick={() => this.handleClick}></Button>
-//   </View>
-// );
-// }
 
 function BarcodeScreen() {
   return (

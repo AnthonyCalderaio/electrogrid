@@ -24,117 +24,30 @@ export default class Inventory extends Component {
     super();
     this.state = {
       viewingGear: null,
-      inventory: [
-        {
-          kind: 'helm',
-          uri: require('./ios/assets/Artwork/Armor/Warrior-Armor-PNG-Photo.png'),
-          metadata: {
-            name: 'helm of swag',
-            rarity: 'rare',
-            stats: 'armor +10',
-            uri: require('./ios/assets/Artwork/Armor/Warrior-Armor-PNG-Photo.png'),
-          },
-        },
-        {
-          kind: 'amulet',
-          uri: require('./ios/assets/Artwork/Armor/kisspng-olivia-benson-earring-necklace-charms-pendants-g-5af13249d36887.5708587315257564898659.png'),
-          metadata: {
-            name: 'fearless amulet',
-            rarity: 'rare',
-            stats: 'Blessing:fearless',
-            uri: require('./ios/assets/Artwork/Armor/kisspng-olivia-benson-earring-necklace-charms-pendants-g-5af13249d36887.5708587315257564898659.png'),
-          },
-        },
-        {
-          kind: 'back',
-          uri: require('./ios/assets/Artwork/Armor/kisspng-cloak-robe-hood-clothing-cloak-5ada92617bf744.3176670515242737615078.png'),
-          metadata: {
-            name: 'cloak of shadows',
-            rarity: 'unique',
-            stats: '+10 defence',
-            uri: require('./ios/assets/Artwork/Armor/kisspng-cloak-robe-hood-clothing-cloak-5ada92617bf744.3176670515242737615078.png'),
-          },
-        },
-        {
-          kind: 'left_weapon',
-          uri: require('./ios/assets/Artwork/Armor/Sword-PNG-File.png'),
-          metadata: {
-            name: 'bane sword',
-            rarity: 'rare',
-            stats: '+10 physical attack',
-            uri: require('./ios/assets/Artwork/Armor/Sword-PNG-File.png'),
-          },
-        },
-        {
-          kind: 'right_weapon',
-          uri: require('./ios/assets/Artwork/Armor/Sword-PNG-Picture.png'),
-          metadata: {
-            name: 'swag sword',
-            rarity: 'rare',
-            stats: '+10 physical attack',
-            uri: require('./ios/assets/Artwork/Armor/Sword-PNG-File.png'),
-          },
-        },
-        {
-          kind: 'chest:',
-          uri: require('./ios/assets/Artwork/Armor/Armor-PNG-Download-Image.png'),
-          metadata: {
-            name: 'dark souls chest',
-            rarity: 'rare',
-            stats: '+10 defence',
-            uri: require('./ios/assets/Artwork/Armor/Armor-PNG-Download-Image.png'),
-          },
-        },
-        {
-          kind: 'left_ring',
-          uri: require('./ios/assets/Artwork/Armor/kisspng-ring-http-cookie-silver-jewellery-platinum-medieval-swords-renaissance-clothing-shields-he-5b6d4ccc2294e9.0120461815338897401417.png'),
-          metadata: {
-            name: 'grandfather ring',
-            rarity: 'rare',
-            stats: '+10 defence',
-            uri: require('./ios/assets/Artwork/Armor/kisspng-ring-http-cookie-silver-jewellery-platinum-medieval-swords-renaissance-clothing-shields-he-5b6d4ccc2294e9.0120461815338897401417.png'),
-          },
-        },
-        {
-          kind: 'right_ring:',
-          uri: require('./ios/assets/Artwork/Armor/kisspng-ring-http-cookie-silver-jewellery-platinum-medieval-swords-renaissance-clothing-shields-he-5b6d4ccc2294e9.0120461815338897401417.png'),
-          metadata: {
-            name: 'grandfather ring',
-            rarity: 'rare',
-            stats: '+10 defence',
-            uri: require('./ios/assets/Artwork/Armor/kisspng-ring-http-cookie-silver-jewellery-platinum-medieval-swords-renaissance-clothing-shields-he-5b6d4ccc2294e9.0120461815338897401417.png'),
-          },
-        },
-      ],
+      inventory: [ ],
     };
   }
 
   componentDidMount() {
     this.setState({modalVisible: false});
     // this.setInventory();
-    // this.getInventory();
+    this.getInventory();
   }
 
   getInventory() {
     const getData = async () => {
       try {
         const jsonValue = await AsyncStorage.getItem('inventory');
-        // console.log('jsonValue:' + Array.from(jsonValue));
-        // console.log('3Array.isArray(gear)'+Array.isArray(jsonValue))
-        let newArray = [JSON.parse(jsonValue)];
+        console.log(Array.from(jsonValue))
         this.setState((state, props) => ({
-          inventory: newArray,
+          inventory: JSON.parse(jsonValue),
         }));
 
-        console.log('got' + JSON.stringify(newArray));
         return jsonValue != null ? JSON.parse(jsonValue) : null;
       } catch (e) {
-        // console.log('e:' + JSON.stringify(e));
-        // error reading value
       }
     };
     getData();
-    // console.log('1got:' + JSON.stringify(this.state.inventory));
   }
 
   setInventory() {
@@ -221,15 +134,14 @@ export default class Inventory extends Component {
       },
     ];
 
-    console.log('this is :' + Array.isArray(gear));
 
     const storeData = async (gear) => {
       try {
-        console.log('1Array.isArray(gear)' + Array.isArray(gear));
         const jsonValue = gear;
-        console.log('2typeof jsonValue' + typeof jsonValue);
-        console.log('set_____>' + jsonValue);
-        await AsyncStorage.setItem('inventory', JSON.stringify(gear[0]));
+
+        await AsyncStorage.setItem('inventory', JSON.stringify(gear)).then(val=>{
+            console.log('saved:'+JSON.stringify(gear))
+        })
       } catch (e) {
         // saving error
       }
@@ -237,7 +149,6 @@ export default class Inventory extends Component {
     storeData(gear);
   }
   toggleModal(visible, metaData) {
-    console.log('got---->:' + metaData);
     this.setState({viewingGear: metaData});
     this.setState({modalVisible: visible});
     if (!this.state.modalVisible) {
@@ -247,7 +158,6 @@ export default class Inventory extends Component {
 
   render() {
     let dataSource = this.state.inventory;
-    console.log('dataSource:' + Array.isArray(dataSource));
     return (
       <View style={styles.container}>
         <Modal
@@ -255,7 +165,6 @@ export default class Inventory extends Component {
           transparent={false}
           visible={this.state.modalVisible}
           onRequestClose={() => {
-            console.log('Modal has been closed.');
           }}>
           <View style={styles.modal}>
             <View
@@ -324,7 +233,6 @@ export default class Inventory extends Component {
 
                 <TouchableOpacity
                   onPress={() => {
-                      console.log('presssed:===')
                     this.toggleModal(true, item.metadata);
                   }}>
                   <Image
