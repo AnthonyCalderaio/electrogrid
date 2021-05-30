@@ -33,7 +33,7 @@ export default class Seek extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#FFFFFF',
+    backgroundColor: 'black',
     alignItems: 'center',
     justifyContent: 'center',
   },

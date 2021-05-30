@@ -17,7 +17,7 @@ import Home from './Home';
 import Battle from './Battle';
 import Seek from './Seek';
 import characterSummary from './character-summary';
-import Icon from 'react-native-vector-icons/dist/FontAwesome';
+import Icon from 'react-native-vector-icons/dist/AntDesign';
 
 
 // function blueToothScreen() {
@@ -118,7 +118,10 @@ export default class App extends Component {
                 iconName = 'home'
               }
               if (route.name.toString() === 'Seek') {
-                iconName = 'swap'
+                iconName = 'addusergroup'
+              }
+              if (route.name.toString() === 'Gear') {
+                iconName = 'skin'
               }
               return <Icon name={iconName} size={size} color={color} />;
             }})}
@@ -131,7 +134,7 @@ export default class App extends Component {
             }}>
             <Tab.Screen name="Home" component={Home} />
             <Tab.Screen name="Seek" component={Seek} />
-            <Tab.Screen name="gear" component={characterSummary} />
+            <Tab.Screen name="Gear" component={characterSummary} />
             {/* <Tab.Screen name="Battle" component={Battle} /> */}
           </Tab.Navigator>
         </NavigationContainer>

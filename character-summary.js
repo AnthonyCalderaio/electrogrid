@@ -11,7 +11,7 @@ import {
   TouchableHighlight,
 } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import Icon from 'react-native-vector-icons/dist/FontAwesome';
+import Icon from 'react-native-vector-icons/dist/AntDesign';
 import {StatusBar} from 'react-native';
 
 export default class characterSummary extends Component {
@@ -42,7 +42,7 @@ export default class characterSummary extends Component {
         metadata: {
           name: 'fearless amulet',
           rarity: 'rare',
-          stats: 'fearless',
+          stats: 'Blessing:fearless',
           uri: require('./ios/assets/Artwork/Armor/kisspng-olivia-benson-earring-necklace-charms-pendants-g-5af13249d36887.5708587315257564898659.png'),
         },
       },
