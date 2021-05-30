@@ -12,12 +12,14 @@ import {BleManager} from 'react-native-ble-plx';
 import {RNCamera} from 'react-native-camera';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {NavigationContainer} from '@react-navigation/native';
+import Icon from 'react-native-vector-icons/dist/AntDesign';
+
 
 import Home from './Home';
 import Battle from './Battle';
 import Seek from './Seek';
 import characterSummary from './character-summary';
-import Icon from 'react-native-vector-icons/dist/AntDesign';
+import Inventory from './Inventory'
 
 
 // function blueToothScreen() {
@@ -123,6 +125,9 @@ export default class App extends Component {
               if (route.name.toString() === 'Gear') {
                 iconName = 'skin'
               }
+              if (route.name.toString() === 'Inventory') {
+                iconName = 'appstore1'
+              }
               return <Icon name={iconName} size={size} color={color} />;
             }})}
             tabBarOptions={{
@@ -134,6 +139,7 @@ export default class App extends Component {
             }}>
             <Tab.Screen name="Home" component={Home} />
             <Tab.Screen name="Seek" component={Seek} />
+            <Tab.Screen name="Inventory" component={Inventory} />
             <Tab.Screen name="Gear" component={characterSummary} />
             {/* <Tab.Screen name="Battle" component={Battle} /> */}
           </Tab.Navigator>

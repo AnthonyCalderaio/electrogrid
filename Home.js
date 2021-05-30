@@ -45,7 +45,6 @@ export default class Home extends Component {
     Object.keys(equippedGear).forEach(gear =>{
       // console.log('Gear:'+gear)
       stats = equippedGear[gear].metadata.stats
-      console.log('stats:'+equippedGear[gear].metadata.stats)
       
       if(stats.includes('attack')){
         var number = stats.match(/\d+/)[0];
@@ -53,7 +52,6 @@ export default class Home extends Component {
           this.setState({userDamage: number(this.state.userDamage - number)});
         }
         if(stats.includes('+')){
-          console.log('add damage')
           let newNumber = Number(this.state.userDamage) + Number(number)
           this.setState({userDamage: Number(newNumber)});
         }
@@ -71,13 +69,9 @@ export default class Home extends Component {
       }
 
       if(stats.includes('Blessing')){
-        console.log('has blessing')
         let blessing = stats.substring(stats.indexOf(":")+1);
-        console.log('blessing:'+blessing)
         let userBlessingsL = Array.from(this.state.userBlessings);
-        console.log('userBlessingsL:'+userBlessingsL)
         userBlessingsL.push(blessing)
-        console.log('userBlessingsL:'+userBlessingsL)
 
         this.setState({userBlessings: userBlessingsL});
       }
