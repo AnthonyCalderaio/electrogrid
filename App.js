@@ -1,17 +1,27 @@
 import React, {Component} from 'react';
-import {StyleSheet, Text, View, Button, TextInput,Alert} from 'react-native';
+import {
+  StyleSheet,
+  Text,
+  View,
+  Button,
+  TextInput,
+  Alert,
+  SafeAreaView,
+} from 'react-native';
 import {BleManager} from 'react-native-ble-plx';
 import {RNCamera} from 'react-native-camera';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {NavigationContainer} from '@react-navigation/native';
 
-import Home from './Home'
-import Battle from './Battle'
-import Seek from './Seek'
-import characterSummary from './character-summary'
+import Home from './Home';
+import Battle from './Battle';
+import Seek from './Seek';
+import characterSummary from './character-summary';
+import Icon from 'react-native-vector-icons/dist/FontAwesome';
+
 
 // function blueToothScreen() {
-  
+
 // }
 
 // function home() {
@@ -26,42 +36,42 @@ import characterSummary from './character-summary'
 //         // Error saving data
 //       }
 //     };
-   
-//   }
 
-  function getStorage() {
-    console.log('hi')
-    _retrieveData = async () => {
-      try {
-        const value = await AsyncStorage.getItem(type);
-        if (value !== null) {
-          // Our data is fetched successfully
-          return value
-          console.log(value);
-        }
-      } catch (error) {
-        // Error retrieving data
+//   }
+console.disableYellowBox = true;
+function getStorage() {
+  console.log('hi');
+  _retrieveData = async () => {
+    try {
+      const value = await AsyncStorage.getItem(type);
+      if (value !== null) {
+        // Our data is fetched successfully
+        return value;
+        console.log(value);
       }
-    };
-  }
-  // onPressStartTheGame(){
-  //   console.log("Pushed button Start the Game!")
-  //   //dispatch({ type: ADD_PLAYER_NAME, playerNumber: 5, playerName: "Sandro" })
-  // }
-  
-  // return (
-  //   <View style={styles.container}>
-  //     <Text>Username:</Text>
-  //     <TextInput  
-  //                   style={{height: 40,backgroundColor: 'azure', fontSize: 20}}  
-  //                   placeholder="Type here to translate!"  
-  //                   onChangeText={(text) => handleInput({text},'username')}  
-  //               />  
-  //     {/* <Text>Level:</Text>
-  //     <Text>XP:</Text> */}
-  //     <Button title="clickMe" onClick={() => this.handleClick}></Button>
-  //   </View>
-  // );
+    } catch (error) {
+      // Error retrieving data
+    }
+  };
+}
+// onPressStartTheGame(){
+//   console.log("Pushed button Start the Game!")
+//   //dispatch({ type: ADD_PLAYER_NAME, playerNumber: 5, playerName: "Sandro" })
+// }
+
+// return (
+//   <View style={styles.container}>
+//     <Text>Username:</Text>
+//     <TextInput
+//                   style={{height: 40,backgroundColor: 'azure', fontSize: 20}}
+//                   placeholder="Type here to translate!"
+//                   onChangeText={(text) => handleInput({text},'username')}
+//               />
+//     {/* <Text>Level:</Text>
+//     <Text>XP:</Text> */}
+//     <Button title="clickMe" onClick={() => this.handleClick}></Button>
+//   </View>
+// );
 // }
 
 function BarcodeScreen() {
@@ -95,18 +105,38 @@ export default class App extends Component {
 
   constructor() {
     super();
-    
   }
   render() {
     return (
-      <NavigationContainer >
-        <Tab.Navigator >
-          <Tab.Screen name="Home" component={Home} />
-          <Tab.Screen name="Seek" component={Seek} />
-          <Tab.Screen name="gear" component={characterSummary}/>
-          {/* <Tab.Screen name="Battle" component={Battle} /> */}
-        </Tab.Navigator>
-      </NavigationContainer>
+      <SafeAreaView style={{flex: 1, backgroundColor: '#fff'}}>
+        <NavigationContainer>
+          <Tab.Navigator
+          screenOptions={({ route }) => ({
+            tabBarIcon: ({ focused, color, size }) => {
+              let iconName;
+              if (route.name.toString() === 'Home') {
+                iconName = 'home'
+              }
+              if (route.name.toString() === 'Seek') {
+                iconName = 'swap'
+              }
+              return <Icon name={iconName} size={size} color={color} />;
+            }})}
+            tabBarOptions={{
+              activeTintColor:'orange',
+              inactiveTintColor:'white',
+              labelStyle: {fontSize: 12},
+              tabStyle: {width: 100},
+              style: {backgroundColor: 'gray', color:'orange'},
+            }}>
+            <Tab.Screen name="Home" component={Home} />
+            <Tab.Screen name="Seek" component={Seek} />
+            <Tab.Screen name="gear" component={characterSummary} />
+            {/* <Tab.Screen name="Battle" component={Battle} /> */}
+          </Tab.Navigator>
+        </NavigationContainer>
+      </SafeAreaView>
+
       ////////////////////
 
       ////////////////
@@ -114,7 +144,7 @@ export default class App extends Component {
   }
 
   storeData(type, data) {
-    console.log('made it here')
+    console.log('made it here');
     // create a function that saves your data asyncronously
     _storeData = async () => {
       try {
@@ -132,7 +162,7 @@ export default class App extends Component {
         const value = await AsyncStorage.getItem(type);
         if (value !== null) {
           // Our data is fetched successfully
-          return value
+          return value;
           console.log(value);
         }
       } catch (error) {
@@ -148,7 +178,6 @@ export default class App extends Component {
   barcodeRecognized = ({barcodes}) => {
     barcodes.forEach((barcode) => console.warn(barcode.data));
   };
-
 }
 
 const styles = StyleSheet.create({
