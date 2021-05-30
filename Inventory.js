@@ -140,7 +140,7 @@ export default class Inventory extends Component {
 
         await AsyncStorage.setItem('inventory', JSON.stringify(gear)).then(
           (val) => {
-            console.log('saved:' + JSON.stringify(gear));
+            console.log('saved2:' + JSON.stringify(gear));
           },
         );
       } catch (e) {

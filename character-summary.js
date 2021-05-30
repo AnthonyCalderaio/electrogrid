@@ -26,16 +26,19 @@ export default class characterSummary extends Component {
   }
 
   getInventory() {
+    console.log('joi')
     const getData = async () => {
       try {
         const jsonValue = await AsyncStorage.getItem('inventory');
-        console.log('got inventory5'+JSON.stringify(JSON.parse(jsonValue)));
+        console.log('got inventory6'+JSON.stringify(JSON.parse(jsonValue)));
         this.setState((state, props) => ({
           inventory: JSON.parse(jsonValue),
         }));
 
         return jsonValue != null ? JSON.parse(jsonValue) : null;
-      } catch (e) {}
+      } catch (e) {
+        console.log('e!'+e)
+      }
     };
     getData();
   }
@@ -108,12 +111,12 @@ export default class characterSummary extends Component {
         id:'grandfather_ring'
       },
       right_ring: {
-        type: 'right_ring',
+        type: 'ring',
         name: 'grandfather ring',
         rarity: 'rare',
         stats: '+10 defence',
         uri: require('./ios/assets/Artwork/Armor/kisspng-ring-http-cookie-silver-jewellery-platinum-medieval-swords-renaissance-clothing-shields-he-5b6d4ccc2294e9.0120461815338897401417.png'),
-        equipped:'right_ring',
+        equipped:'ring',
         id:'grandfather_ring1'
       }
     };
@@ -153,7 +156,7 @@ export default class characterSummary extends Component {
     storeData(value);
   }
   toggleModal(visible, metaData) {
-    console.log('got---->:' + metaData);
+    console.log('got9---->:' + JSON.stringify(metaData));
     this.setState({viewingGear: metaData});
     this.setState({modalVisible: visible});
     if (!this.state.modalVisible) {
@@ -172,22 +175,22 @@ export default class characterSummary extends Component {
   replaceEquipped() {
     this.setState({modalVisible: false});
     this.setState({modalSwitchVisible: true});
-    console.log('viewingGear:'+JSON.stringify(this.state.viewingGear.type))
+    console.log('viewingGear2:'+JSON.stringify(this.state.viewingGear))
     let type = this.state.viewingGear.type
-    console.log('inventoryToReplace:'+JSON.stringify(this.state.inventory))
+    console.log('inventoryToReplace4:'+JSON.stringify(this.state.inventory))
     let typeFilterdInventory = this.state.inventory.filter(item => {
       console.log('10item.name:'+item.name)
-      console.log('13item.type:'+item.type)
+      console.log('15item.type:'+item.type)
       console.log('10this.state.viewingGear.type:'+this.state.viewingGear.type)
       if((item?.type === this.state.viewingGear.type && !item.equipped)){console.log('match:'+item.id);return item }
     })
     this.setState({typeFilterdInventory: typeFilterdInventory});
     
-    console.log('7replaceNow' + JSON.stringify(typeFilterdInventory));
+    console.log('8replaceNow' + JSON.stringify(typeFilterdInventory));
   }
   ensureEquipped(equipThis){
 
-    // console.log('equipThis:'+JSON.stringify(equipThis))
+    console.log('equippedGear2:'+JSON.stringify(this.state.equippedGear))
   }
   render() {
     const gearTitles = [
@@ -340,7 +343,7 @@ export default class characterSummary extends Component {
               <TouchableHighlight
                 onPress={() => {
                   this.toggleModal(!this.state.modalSwitchVisible);
-                  this.replaceEquipped(this.state.viewingGear.type);
+                  this.replaceEquipped();
                 }}>
                 <Icon name="reload1" size={30} color="#4F8EF7" />
                 {/* <Text style={styles.text}>Close Modal</Text> */}
