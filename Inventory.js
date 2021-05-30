@@ -24,13 +24,13 @@ export default class Inventory extends Component {
     super();
     this.state = {
       viewingGear: null,
-      inventory: [ ],
+      inventory: [],
     };
   }
 
   componentDidMount() {
     this.setState({modalVisible: false});
-    // this.setInventory();
+    this.setInventory();
     this.getInventory();
   }
 
@@ -38,14 +38,13 @@ export default class Inventory extends Component {
     const getData = async () => {
       try {
         const jsonValue = await AsyncStorage.getItem('inventory');
-        console.log(Array.from(jsonValue))
+        console.log(Array.from(jsonValue));
         this.setState((state, props) => ({
           inventory: JSON.parse(jsonValue),
         }));
 
         return jsonValue != null ? JSON.parse(jsonValue) : null;
-      } catch (e) {
-      }
+      } catch (e) {}
     };
     getData();
   }
@@ -53,95 +52,97 @@ export default class Inventory extends Component {
   setInventory() {
     const gear = [
       {
-        kind: 'helm',
+        type: 'helm',
+        name: 'helm of swag',
+        rarity: 'rare',
+        stats: 'armor +10',
         uri: require('./ios/assets/Artwork/Armor/Warrior-Armor-PNG-Photo.png'),
-        metadata: {
-          name: 'helm of swag',
-          rarity: 'rare',
-          stats: 'armor +10',
-          uri: require('./ios/assets/Artwork/Armor/Warrior-Armor-PNG-Photo.png'),
-        },
+        equipped:'helm',
+        id:'helm_of_swag'
       },
       {
-        kind: 'amulet',
+        type: 'amulet',
+        name: 'fearless amulet',
+        rarity: 'rare',
+        stats: 'Blessing:fearless',
         uri: require('./ios/assets/Artwork/Armor/kisspng-olivia-benson-earring-necklace-charms-pendants-g-5af13249d36887.5708587315257564898659.png'),
-        metadata: {
-          name: 'fearless amulet',
-          rarity: 'rare',
-          stats: 'Blessing:fearless',
-          uri: require('./ios/assets/Artwork/Armor/kisspng-olivia-benson-earring-necklace-charms-pendants-g-5af13249d36887.5708587315257564898659.png'),
-        },
+        equipped:'amulet',
+        id:'fearless_amulet'
       },
       {
-        kind: 'back',
+        type: 'back',
+        name: 'cloak of shadows',
+        rarity: 'unique',
+        stats: '+10 defence',
         uri: require('./ios/assets/Artwork/Armor/kisspng-cloak-robe-hood-clothing-cloak-5ada92617bf744.3176670515242737615078.png'),
-        metadata: {
-          name: 'cloak of shadows',
-          rarity: 'unique',
-          stats: '+10 defence',
-          uri: require('./ios/assets/Artwork/Armor/kisspng-cloak-robe-hood-clothing-cloak-5ada92617bf744.3176670515242737615078.png'),
-        },
+        equipped:'back',
+        id:'cloak_of_shadows'
       },
       {
-        kind: 'left_weapon',
+        type: 'weapon',
+        name: 'bane sword',
+        rarity: 'rare',
+        stats: '+10 physical attack',
         uri: require('./ios/assets/Artwork/Armor/Sword-PNG-File.png'),
-        metadata: {
-          name: 'bane sword',
-          rarity: 'rare',
-          stats: '+10 physical attack',
-          uri: require('./ios/assets/Artwork/Armor/Sword-PNG-File.png'),
-        },
+        equipped:'left_weapon',
+        id:'bane_sword'
       },
       {
-        kind: 'right_weapon',
-        uri: require('./ios/assets/Artwork/Armor/Sword-PNG-Picture.png'),
-        metadata: {
-          name: 'swag sword',
-          rarity: 'rare',
-          stats: '+10 physical attack',
-          uri: require('./ios/assets/Artwork/Armor/Sword-PNG-File.png'),
-        },
+        type: 'weapon',
+        name: 'swag sword',
+        rarity: 'rare',
+        stats: '+10 physical attack',
+        uri: require('./ios/assets/Artwork/Armor/Sword-PNG-File.png'),
+        equipped:'right_weapon',
+        id:'swag_sword'
       },
       {
-        kind: 'chest:',
+        type: 'chest',
+        name: 'dark souls chest',
+        rarity: 'rare',
+        stats: '+10 defence',
         uri: require('./ios/assets/Artwork/Armor/Armor-PNG-Download-Image.png'),
-        metadata: {
-          name: 'dark souls chest',
-          rarity: 'rare',
-          stats: '+10 defence',
-          uri: require('./ios/assets/Artwork/Armor/Armor-PNG-Download-Image.png'),
-        },
+        equipped:'chest',
+        id:'dark_souls_chest'
       },
       {
-        kind: 'left_ring',
+        type: 'ring',
+        name: 'grandfather ring',
+        rarity: 'rare',
+        stats: '+10 defence',
         uri: require('./ios/assets/Artwork/Armor/kisspng-ring-http-cookie-silver-jewellery-platinum-medieval-swords-renaissance-clothing-shields-he-5b6d4ccc2294e9.0120461815338897401417.png'),
-        metadata: {
-          name: 'grandfather ring',
-          rarity: 'rare',
-          stats: '+10 defence',
-          uri: require('./ios/assets/Artwork/Armor/kisspng-ring-http-cookie-silver-jewellery-platinum-medieval-swords-renaissance-clothing-shields-he-5b6d4ccc2294e9.0120461815338897401417.png'),
-        },
+        equipped:'left_ring',
+        id:'grandfather_ring'
       },
       {
-        kind: 'right_ring:',
+        type: 'ring',
+        name: 'grandfather ring',
+        rarity: 'rare',
+        stats: '+10 defence',
         uri: require('./ios/assets/Artwork/Armor/kisspng-ring-http-cookie-silver-jewellery-platinum-medieval-swords-renaissance-clothing-shields-he-5b6d4ccc2294e9.0120461815338897401417.png'),
-        metadata: {
-          name: 'grandfather ring',
-          rarity: 'rare',
-          stats: '+10 defence',
-          uri: require('./ios/assets/Artwork/Armor/kisspng-ring-http-cookie-silver-jewellery-platinum-medieval-swords-renaissance-clothing-shields-he-5b6d4ccc2294e9.0120461815338897401417.png'),
-        },
+        equipped:'right_ring',
+        id:'grandfather_ring1'
+      },
+      {
+        type: 'ring',
+        uri: require('./ios/assets/Artwork/Armor/Ring-PNG-Clipart.png'),
+        name: 'ruby ring',
+        rarity: 'rare',
+        stats: '+10 defence',
+        equipped:false,
+        id:'ruby_ring'
       },
     ];
-
 
     const storeData = async (gear) => {
       try {
         const jsonValue = gear;
 
-        await AsyncStorage.setItem('inventory', JSON.stringify(gear)).then(val=>{
-            console.log('saved:'+JSON.stringify(gear))
-        })
+        await AsyncStorage.setItem('inventory', JSON.stringify(gear)).then(
+          (val) => {
+            console.log('saved:' + JSON.stringify(gear));
+          },
+        );
       } catch (e) {
         // saving error
       }
@@ -164,8 +165,7 @@ export default class Inventory extends Component {
           animationType={'slide'}
           transparent={false}
           visible={this.state.modalVisible}
-          onRequestClose={() => {
-          }}>
+          onRequestClose={() => {}}>
           <View style={styles.modal}>
             <View
               style={{
@@ -175,7 +175,7 @@ export default class Inventory extends Component {
               }}>
               <TouchableHighlight
                 onPress={() => {
-                  this.toggleModal(!this.state.modalVisible,null);
+                  this.toggleModal(!this.state.modalVisible, null);
                 }}>
                 <Icon name="close" size={30} color="#4F8EF7" />
                 {/* <Text style={styles.text}>Close Modal</Text> */}
@@ -229,16 +229,15 @@ export default class Inventory extends Component {
                 }}>
                 {/* <Text style={styles.text}>{this.state.inventory}</Text>
                 <Text style={styles.words}>{JSON.stringify(item)}</Text> */}
-                
 
                 <TouchableOpacity
                   onPress={() => {
-                    this.toggleModal(true, item.metadata);
+                    this.toggleModal(true, item);
                   }}>
                   <Image
                     style={{width: '90%', height: '90%'}}
                     resizeMode="contain"
-                    source={item.metadata.uri}
+                    source={item.uri}
                   />
                 </TouchableOpacity>
               </View>
@@ -279,8 +278,8 @@ const styles = StyleSheet.create({
   },
   modal: {
     flex: 1,
-    flexDirection:'column',
+    flexDirection: 'column',
     alignItems: 'center',
-    backgroundColor: 'black'
+    backgroundColor: 'black',
   },
 });
