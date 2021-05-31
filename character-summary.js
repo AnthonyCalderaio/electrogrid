@@ -143,7 +143,7 @@ export default class characterSummary extends Component {
     this.setState((state, props) => ({
       equippedGear: JSON.parse(input),
     }));
-    console.log('equipped state should be:'+input)
+    // console.log('equipped state should be:'+input)
   }
 
   saveEquipped(value) {
@@ -176,12 +176,12 @@ export default class characterSummary extends Component {
   }
 
   replaceEquipped(equipType) {
-    console.log('viewingGear:'+JSON.stringify(this.state.viewingGear))
+    // console.log('viewingGear:'+JSON.stringify(this.state.viewingGear))
     this.setState({modalVisible: false});
     this.setState({modalSwitchVisible: true});
     // let type = this.state.viewingGear.type;
     let typeFilterdInventory = this.state.inventory.filter((inventoryItem) => {
-       console.log('inventoryItem:'+JSON.stringify(inventoryItem))
+      //  console.log('inventoryItem:'+JSON.stringify(inventoryItem))
       if (inventoryItem?.type.includes(equipType)) {
         return inventoryItem;
       }
@@ -191,17 +191,17 @@ export default class characterSummary extends Component {
       
     });
     let viewingGearCopy = JSON.parse(JSON.stringify(this.state.viewingGear))
-    viewingGearCopy.equipped = equipType
+    viewingGearCopy.equipped = equipType ? equipType : this.state.viewingGear.type
     this.setState((state, props) => ({
       viewingGear: viewingGearCopy,
     }));
     
-    console.log('available options:'+JSON.stringify(typeFilterdInventory))
+    // console.log('available options:'+JSON.stringify(typeFilterdInventory))
     this.setState({typeFilterdInventory: typeFilterdInventory});
   }
   ensureEquipped(equipThis) {
-    console.log('equipThis:'+JSON.stringify(equipThis))
-    console.log('this.state.equippedGea:'+JSON.stringify(this.state.equippedGear))
+    // console.log('equipThis:'+JSON.stringify(equipThis))
+    // console.log('this.state.equippedGea:'+JSON.stringify(this.state.equippedGear))
   }
   unequippedById(idToUnequip) {
     let unequipType = idToUnequip.type;
@@ -242,7 +242,6 @@ export default class characterSummary extends Component {
     storeData(input);
   }
   equipById(idToEquip) {
-    console.log('should equip:'+idToEquip)
     //1) Equip the item in the inventory
     //2) Update the equippedItems
     //3) Remove the equipped flag from the old item in the inventory
@@ -254,6 +253,7 @@ export default class characterSummary extends Component {
         inventoryItem.equipped = this.state.viewingGear.equipped;
         let newEquipped = JSON.parse(JSON.stringify(this.state.equippedGear));
         // let keyType = this.state.viewingGear.equipped ? this.state.viewingGear.equipped : 
+        console.log('hmm???'+JSON.stringify(this.state.viewingGear))
         newEquipped[this.state.viewingGear.equipped.toLowerCase()] = inventoryItem;
         console.log('this shouldnt be undefined:'+this.state.viewingGear.equipped)
         this.saveEquipped(JSON.stringify(newEquipped));
@@ -494,7 +494,6 @@ export default class characterSummary extends Component {
                       width: '100%',
                     }}
                     onPress={(item2) => {
-                      console.log('item'+JSON.stringify(item.title))
                       this.toggleModal(!this.state.modalSwitchVisible);
                       this.replaceEquipped(item.title);
                       // this.toggleModal(
