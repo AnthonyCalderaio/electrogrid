@@ -311,7 +311,7 @@ export default class characterSummary extends Component {
       'Right Weapon',
       'Left Ring',
       'Legs',
-      'Right ring',
+      'Right Ring',
     ];
     const gear = [
       {

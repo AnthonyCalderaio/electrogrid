@@ -38,7 +38,7 @@ export default class Inventory extends Component {
     const getData = async () => {
       try {
         const jsonValue = await AsyncStorage.getItem('inventory');
-        console.log(Array.from(jsonValue));
+        // console.log(Array.from(jsonValue));
         this.setState((state, props) => ({
           inventory: JSON.parse(jsonValue),
         }));
@@ -133,22 +133,22 @@ export default class Inventory extends Component {
         id: 'ruby_ring',
       },
     ];
-    console.log('trying to set!');
+    // console.log('trying to set!');
     const storeData = async (gear) => {
       try {
         const jsonValue = gear;
 
         await AsyncStorage.setItem('inventory', JSON.stringify(gear)).then(
           (val) => {
-            console.log(
-              'inventory saved in inventory.js:' + JSON.stringify(gear),
-            );
+            // console.log(
+            //   'inventory saved in inventory.js:' + JSON.stringify(gear),
+            // );
           },
         );
       } catch (e) {
-        console.log(
-          'inventory NOT saved in inventory.js:' + JSON.stringify(gear),
-        );
+        // console.log(
+        //   'inventory NOT saved in inventory.js:' + JSON.stringify(gear),
+        // );
         // saving error
       }
     };
@@ -222,7 +222,8 @@ export default class Inventory extends Component {
             style={{margin: 5}}
             data={this.state.inventory}
             numColumns={3}
-            renderItem={({item, index}) => (
+            renderItem={
+              ({item, index}) => (
               <View
                 style={{
                   flexBasis: '30%',
@@ -247,12 +248,13 @@ export default class Inventory extends Component {
                   <Image
                     style={{width: '90%', height: '90%'}}
                     resizeMode="contain"
-                    source={item.uri}
+                    source={item?.uri}
                   />
                 </TouchableOpacity>
               </View>
-            )}
-            keyExtractor={(item, index) => item}
+            )
+          }
+            keyExtractor={(item) => item.uri}
             contentContainerStyle={styles.listView}
           />
         </SafeAreaView>

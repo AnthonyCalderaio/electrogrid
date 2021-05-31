@@ -43,7 +43,7 @@ function BarcodeScreen() {
     <View style={styles.container}>
       {/* <Text>State: {this.state.bleState}</Text>
         <Button onPress={this.clicked} title="Click Me!" color="#841584" /> */}
-      <RNCamera
+      {/* <RNCamera
         ref={(ref) => {
           this.camera = ref;
         }}
@@ -56,7 +56,7 @@ function BarcodeScreen() {
         onBarCodeRead={(barcode) =>
           // this.onBarCodeRead.bind(this)
           console.log('barcode:' + barcode.data)
-        }></RNCamera>
+        }></RNCamera> */}
     </View>
   );
 }
