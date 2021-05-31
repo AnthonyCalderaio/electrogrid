@@ -272,6 +272,11 @@ export default class characterSummary extends Component {
     };
     storeData(input);
   }
+
+  // get_key_translation(input){
+  //   if(input == )
+  // }
+
   equipById(idToEquip) {
     //1) Equip the item in the inventory
     //2) Update the equippedItems
@@ -285,8 +290,10 @@ export default class characterSummary extends Component {
         let newEquipped = JSON.parse(JSON.stringify(this.state.equippedGear));
         // let keyType = this.state.viewingGear.equipped ? this.state.viewingGear.equipped :
         newEquipped[
-          this.state.viewingGear.equipped.toLowerCase()
+          this.state.viewingGear.equipped.replace(' ','_').toLowerCase()
         ] = inventoryItem;
+        // console.log('this.state.viewingGear.equipped.toLowerCase():'+JSON.stringify(this.state.viewingGear.equipped.replace(' ','_').toLowerCase()))
+        
         this.saveEquipped(JSON.stringify(newEquipped));
       }
       if (inventoryItem.id === this.state.viewingGear.id) {
@@ -428,7 +435,7 @@ export default class characterSummary extends Component {
                     </TouchableOpacity>
                   </View>
                 )}
-                keyExtractor={(item, index) => item}
+                keyExtractor={(item, index) => item.uri}
                 contentContainerStyle={styles.listView}
               />
             </View>
@@ -586,7 +593,7 @@ export default class characterSummary extends Component {
                 }
               </View>
             )}
-            keyExtractor={(item, index) => item.id}
+            keyExtractor={(item, index) => item.uri}
             contentContainerStyle={styles.listView}
           />
         </SafeAreaView>
