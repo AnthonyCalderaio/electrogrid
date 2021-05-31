@@ -180,12 +180,13 @@ export default class characterSummary extends Component {
     this.setState({modalVisible: false});
     this.setState({modalSwitchVisible: true});
 
-    let equipTypeCopy = equipType.toString().toLowerCase().replace(' ', '_');
+
+    let equipTypeCopy = equipType ? equipType.toString().toLowerCase().replace(' ', '_') : ''
     if (equipTypeCopy?.includes('_')) {
       equipTypeCopy = equipTypeCopy.split('_')[1] ? equipTypeCopy.split('_')[1] : sequipTypeCopy ;
       equipTypeCopy = equipTypeCopy.toLowerCase()
     }
-    let viewGearTypeCopy = this.state.viewingGear.type;
+    let viewGearTypeCopy = this.state.viewingGear.type 
     if (viewGearTypeCopy?.includes('_')) {
       viewGearTypeCopy = viewGearTypeCopy.split('_')[1] ? viewGearTypeCopy.split('_')[1] : viewGearTypeCopy
       viewGearTypeCopy=viewGearTypeCopy.toLowerCase()
