@@ -50,100 +50,102 @@ export default class Inventory extends Component {
   }
 
   setInventory() {
+    
     const gear = [
       {
-        type: 'helm',
+        type: 'Helm',
         name: 'helm of swag',
         rarity: 'rare',
         stats: 'armor +10',
         uri: require('./ios/assets/Artwork/Armor/Warrior-Armor-PNG-Photo.png'),
-        equipped:'helm',
+        equipped:false,
         id:'helm_of_swag'
       },
       {
-        type: 'amulet',
+        type: 'Amulet',
         name: 'fearless amulet',
         rarity: 'rare',
         stats: 'Blessing:fearless',
         uri: require('./ios/assets/Artwork/Armor/kisspng-olivia-benson-earring-necklace-charms-pendants-g-5af13249d36887.5708587315257564898659.png'),
-        equipped:'amulet',
+        equipped:false,
         id:'fearless_amulet'
       },
       {
-        type: 'back',
+        type: 'Back',
         name: 'cloak of shadows',
         rarity: 'unique',
         stats: '+10 defence',
         uri: require('./ios/assets/Artwork/Armor/kisspng-cloak-robe-hood-clothing-cloak-5ada92617bf744.3176670515242737615078.png'),
-        equipped:'back',
+        equipped:false,
         id:'cloak_of_shadows'
       },
       {
-        type: 'weapon',
+        type: 'Weapon',
         name: 'bane sword',
         rarity: 'rare',
         stats: '+10 physical attack',
         uri: require('./ios/assets/Artwork/Armor/Sword-PNG-File.png'),
-        equipped:'left_weapon',
+        equipped:false,
         id:'bane_sword'
       },
       {
-        type: 'weapon',
+        type: 'Weapon',
         name: 'swag sword',
         rarity: 'rare',
         stats: '+10 physical attack',
         uri: require('./ios/assets/Artwork/Armor/Sword-PNG-File.png'),
-        equipped:'right_weapon',
+        equipped:false,
         id:'swag_sword'
       },
       {
-        type: 'chest',
+        type: 'Chest',
         name: 'dark souls chest',
         rarity: 'rare',
         stats: '+10 defence',
         uri: require('./ios/assets/Artwork/Armor/Armor-PNG-Download-Image.png'),
-        equipped:'chest',
+        equipped:false,
         id:'dark_souls_chest'
       },
       {
-        type: 'ring',
+        type: 'Ring',
         name: 'grandfather ring',
         rarity: 'rare',
         stats: '+10 defence',
         uri: require('./ios/assets/Artwork/Armor/kisspng-ring-http-cookie-silver-jewellery-platinum-medieval-swords-renaissance-clothing-shields-he-5b6d4ccc2294e9.0120461815338897401417.png'),
-        equipped:'left_ring',
+        equipped:false,
         id:'grandfather_ring'
       },
       {
-        type: 'ring',
+        type: 'Ring',
         name: 'grandfather ring',
         rarity: 'rare',
         stats: '+10 defence',
         uri: require('./ios/assets/Artwork/Armor/kisspng-ring-http-cookie-silver-jewellery-platinum-medieval-swords-renaissance-clothing-shields-he-5b6d4ccc2294e9.0120461815338897401417.png'),
-        equipped:'right_ring',
+        equipped:false,
         id:'grandfather_ring1'
       },
       {
-        type: 'ring',
+        type: 'Ring',
         uri: require('./ios/assets/Artwork/Armor/Ring-PNG-Clipart.png'),
         name: 'ruby ring',
         rarity: 'rare',
         stats: '+10 defence',
-        equipped:false,
+        equipped:'left_ring',
         id:'ruby_ring'
       },
     ];
-
+    console.log('trying to set!')
     const storeData = async (gear) => {
       try {
         const jsonValue = gear;
 
         await AsyncStorage.setItem('inventory', JSON.stringify(gear)).then(
           (val) => {
-            console.log('saved2:' + JSON.stringify(gear));
+            console.log('inventory saved in inventory.js:' + JSON.stringify(gear));
           },
         );
       } catch (e) {
+        console.log('inventory NOT saved in inventory.js:' + JSON.stringify(gear));
         // saving error
       }
     };
@@ -230,7 +232,7 @@ export default class Inventory extends Component {
                 {/* <Text style={styles.text}>{this.state.inventory}</Text>
                 <Text style={styles.words}>{JSON.stringify(item)}</Text> */}
 
-                <TouchableOpacity
+                <TouchableOpacity style={{height:'100%',width:'100%', backgroundColor:'red'}}
                   onPress={() => {
                     this.toggleModal(true, item);
                   }}>

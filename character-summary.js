@@ -26,11 +26,9 @@ export default class characterSummary extends Component {
   }
 
   getInventory() {
-    // console.log('joi');
     const getData = async () => {
       try {
         const jsonValue = await AsyncStorage.getItem('inventory');
-        // console.log('got inventory6' + JSON.stringify(JSON.parse(jsonValue)));
         this.setState((state, props) => ({
           inventory: JSON.parse(jsonValue),
         }));
@@ -44,7 +42,6 @@ export default class characterSummary extends Component {
   }
 
   componentDidMount() {
-    console.log('mounted!')
     this.setState({modalVisible: false});
     this.setState({modalSwitchVisible: false});
     const equiped = {
@@ -136,35 +133,30 @@ export default class characterSummary extends Component {
         }));
         return jsonValue != null ? JSON.parse(jsonValue) : null;
       } catch (e) {
-        console.log('e?'+e)
         // error reading value
       }
     };
     getData();
   }
 
-  saveEquippedToState(input){
+  saveEquippedToState(input) {
     this.setState((state, props) => ({
       equippedGear: JSON.parse(input),
     }));
+    console.log('equipped state should be:'+input)
   }
 
   saveEquipped(value) {
-    console.log('make this new equipped:'+JSON.stringify(value))
-    console.log('typeof'+typeof value)
     const storeData = async (value) => {
       try {
         const jsonValue = JSON.stringify(value);
-        console.log('YAY1+'+JSON.stringify(value))
         await AsyncStorage.setItem('equippedArmor', value);
       } catch (e) {
-        console.log('e????'+e)
         // saving error
       }
     };
     storeData(JSON.parse(JSON.stringify(value)));
-    this.saveEquippedToState(value)
-    console.log('What is equipped??'+JSON.stringify(this.state.equippedGear))
+    this.saveEquippedToState(value);
   }
   toggleModal(visible, metaData) {
     if (metaData) {
@@ -183,41 +175,51 @@ export default class characterSummary extends Component {
     }
   }
 
-  replaceEquipped() {
-    console.log('replaceEquipped:')
+  replaceEquipped(equipType) {
+    console.log('viewingGear:'+JSON.stringify(this.state.viewingGear))
     this.setState({modalVisible: false});
     this.setState({modalSwitchVisible: true});
-    let type = this.state.viewingGear.type;
-    let typeFilterdInventory = this.state.inventory.filter((item) => {
-      console.log('item:' + JSON.stringify(item));
-      if (item?.type === this.state.viewingGear.type && !item.equipped) {
-        return item;
+    // let type = this.state.viewingGear.type;
+    let typeFilterdInventory = this.state.inventory.filter((inventoryItem) => {
+       console.log('inventoryItem:'+JSON.stringify(inventoryItem))
+      if (inventoryItem?.type.includes(equipType)) {
+        return inventoryItem;
       }
+      if (inventoryItem?.type.includes(this.state.viewingGear.type)) {
+        return inventoryItem;
+      }
+      
     });
+    let viewingGearCopy = JSON.parse(JSON.stringify(this.state.viewingGear))
+    viewingGearCopy.equipped = equipType
+    this.setState((state, props) => ({
+      viewingGear: viewingGearCopy,
+    }));
+    
+    console.log('available options:'+JSON.stringify(typeFilterdInventory))
     this.setState({typeFilterdInventory: typeFilterdInventory});
   }
   ensureEquipped(equipThis) {
-
+    console.log('equipThis:'+JSON.stringify(equipThis))
+    console.log('this.state.equippedGea:'+JSON.stringify(this.state.equippedGear))
   }
   unequippedById(idToUnequip) {
-    let unequipType = idToUnequip.type
-    let newEquippedArray = Object.keys(this.state.equippedGear).map((key, index) => {
-      if (!(this.state.equippedGear[key].id == idToUnequip.id)) {
-        return this.state.equippedGear[key];
-      }else{
-      }
-        
-    });
+    let unequipType = idToUnequip.type;
+    let newEquippedArray = Object.keys(this.state.equippedGear).map(
+      (key, index) => {
+        if (!(this.state.equippedGear[key].id == idToUnequip.id)) {
+          return this.state.equippedGear[key];
+        } else {
+        }
+      },
+    );
 
-    let newEquippedObject = {}
+    let newEquippedObject = {};
     newEquippedArray.forEach((item) => {
-      console.log('item')
-      if(item){
-        newEquippedObject[item.type] = item
+      if (item) {
+        newEquippedObject[item.type] = item;
       }
-      
-    })
-
+    });
 
     this.setState((state, props) => ({
       equippedGear: newEquippedObject,
@@ -229,11 +231,10 @@ export default class characterSummary extends Component {
       try {
         const jsonValue = input;
 
-        await AsyncStorage.setItem('inventory', JSON.stringify(input)).then(
-          (val) => {
-            console.log('saved2:' + JSON.stringify(input));
-          },
-        );
+        await AsyncStorage.setItem(
+          'inventory',
+          JSON.stringify(input),
+        ).then((val) => {});
       } catch (e) {
         // saving error
       }
@@ -241,27 +242,29 @@ export default class characterSummary extends Component {
     storeData(input);
   }
   equipById(idToEquip) {
+    console.log('should equip:'+idToEquip)
     //1) Equip the item in the inventory
     //2) Update the equippedItems
     //3) Remove the equipped flag from the old item in the inventory
-    let someNewArray = JSON.parse(JSON.stringify(this.state.inventory))
+    let someNewArray = JSON.parse(JSON.stringify(this.state.inventory));
     let newInventory = someNewArray.map((inventoryItemOrig, index) => {
-      let inventoryItem = new Object(inventoryItemOrig)
-      inventoryItem = JSON.parse(JSON.stringify(inventoryItem))
+      let inventoryItem = new Object(inventoryItemOrig);
+      inventoryItem = JSON.parse(JSON.stringify(inventoryItem));
       if (inventoryItem.id === idToEquip) {
-        inventoryItem.equipped = this.state.viewingGear.equipped
-        let newEquipped = JSON.parse(JSON.stringify(this.state.equippedGear))
-        newEquipped[this.state.viewingGear.equipped] = inventoryItem
-        this.saveEquipped(JSON.stringify(newEquipped))
+        inventoryItem.equipped = this.state.viewingGear.equipped;
+        let newEquipped = JSON.parse(JSON.stringify(this.state.equippedGear));
+        // let keyType = this.state.viewingGear.equipped ? this.state.viewingGear.equipped : 
+        newEquipped[this.state.viewingGear.equipped.toLowerCase()] = inventoryItem;
+        console.log('this shouldnt be undefined:'+this.state.viewingGear.equipped)
+        this.saveEquipped(JSON.stringify(newEquipped));
       }
-      if(inventoryItem.id === this.state.viewingGear.id){
-        inventoryItem.equipped = 'false'
+      if (inventoryItem.id === this.state.viewingGear.id) {
+        inventoryItem.equipped = 'false';
       }
       // inventoryItem.equipped = false;
       return inventoryItem;
     });
-    console.log('newInventory:'+JSON.stringify(newInventory))
-    
+
     this.setInventory(newInventory);
 
     return;
@@ -271,18 +274,18 @@ export default class characterSummary extends Component {
     const gearTitles = [
       'Amulet',
       'Helm',
-      'back',
+      'Back',
       'Left Weapon',
       'Chest',
       'Right Weapon',
-      'Left ring',
+      'Left Ring',
       'Legs',
       'Right ring',
     ];
     const gear = [
       {
         id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
-        title: 'Left Shoulder',
+        title: 'Amulet',
       },
       {
         id: '3ac68afc-c605-48d3-a4f8-fbd91aa97f63',
@@ -290,7 +293,7 @@ export default class characterSummary extends Component {
       },
       {
         id: '58694a0f-3da1-471f-bd96-145571e29d72',
-        title: 'Right Shoulder',
+        title: 'Back',
       },
       {
         id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
@@ -306,7 +309,7 @@ export default class characterSummary extends Component {
       },
       {
         id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
-        title: 'Left slot',
+        title: 'Left Rlot',
       },
       {
         id: '3ac68afc-c605-48d3-a4f8-fbd91aa97f63',
@@ -314,7 +317,7 @@ export default class characterSummary extends Component {
       },
       {
         id: '58694a0f-3da1-471f-bd96-145571e29d72',
-        title: 'Right Slot',
+        title: 'Right Ring',
       },
     ];
 
@@ -334,9 +337,7 @@ export default class characterSummary extends Component {
           animationType={'slide'}
           transparent={false}
           visible={this.state.modalSwitchVisible}
-          onRequestClose={() => {
-            // console.log('Modal has been closed.');
-          }}>
+          onRequestClose={() => {}}>
           <View style={styles.modal}>
             <Text style={styles.text}>Replacing</Text>
             <View
@@ -374,10 +375,16 @@ export default class characterSummary extends Component {
                     {/* <Text style={styles.text}>
                       {JSON.stringify(this.state.viewingGear)}
                     </Text> */}
-
+                    {item?.equipped != false && item?.equipped != 'false' && (
+                      <Icon
+                        name="reload1"
+                        size={30}
+                        color="#4F8EF7"
+                        style={{maxHeight: 10}}
+                      />
+                    )}
                     <TouchableOpacity
                       onPress={() => {
-                        console.log('what just happened')
                         // this.unequippedById(this.state.viewingGear);
                         this.equipById(item.id);
                       }}>
@@ -401,9 +408,7 @@ export default class characterSummary extends Component {
           animationType={'slide'}
           transparent={false}
           visible={this.state.modalVisible}
-          onRequestClose={() => {
-            console.log('Modal has been closed.');
-          }}>
+          onRequestClose={() => {}}>
           <View style={styles.modal}>
             <Text style={styles.text}>Inspecting</Text>
             <View
@@ -479,20 +484,46 @@ export default class characterSummary extends Component {
                 }}>
                 {/* gearTitles[index]  */}
                 <Text style={styles.words}>{gearTitles[index]}</Text>
+                {!this.state.equippedGear[
+                  gearTitles[index].toString().toLowerCase().replace(' ', '_')
+                ] && (
+                  <TouchableOpacity
+                    style={{
+                      backgroundColor: 'blue',
+                      height: '100%',
+                      width: '100%',
+                    }}
+                    onPress={(item2) => {
+                      console.log('item'+JSON.stringify(item.title))
+                      this.toggleModal(!this.state.modalSwitchVisible);
+                      this.replaceEquipped(item.title);
+                      // this.toggleModal(
+                      //   true,
+                      //   this.state.equippedGear[
+                      //     gearTitles[index]
+                      //       .toString()
+                      //       .toLowerCase()
+                      //       .replace(' ', '_')
+                      //   ],
+                      // );
+                    }}></TouchableOpacity>
+                )}
 
                 {
                   (this.ensureEquipped(
                     this.state.equippedGear[
-                      gearTitles[index]
-                        .toString()
-                        .toLowerCase()
-                        .replace(' ', '_')
+                      gearTitles[index].toString().toLowerCase().replace(' ', '_')
                     ],
                   ),
                   this.state.equippedGear[
                     gearTitles[index].toString().toLowerCase().replace(' ', '_')
                   ] && (
                     <TouchableOpacity
+                      style={{
+                        backgroundColor: 'red',
+                        height: '100%',
+                        width: '100%',
+                      }}
                       onPress={(item) => {
                         this.toggleModal(
                           true,
