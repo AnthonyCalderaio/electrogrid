@@ -50,7 +50,6 @@ export default class Inventory extends Component {
   }
 
   setInventory() {
-    
     const gear = [
       {
         type: 'Helm',
@@ -58,8 +57,8 @@ export default class Inventory extends Component {
         rarity: 'rare',
         stats: 'armor +10',
         uri: require('./ios/assets/Artwork/Armor/Warrior-Armor-PNG-Photo.png'),
-        equipped:false,
-        id:'helm_of_swag'
+        equipped: false,
+        id: 'helm_of_swag',
       },
       {
         type: 'Amulet',
@@ -67,8 +66,8 @@ export default class Inventory extends Component {
         rarity: 'rare',
         stats: 'Blessing:fearless',
         uri: require('./ios/assets/Artwork/Armor/kisspng-olivia-benson-earring-necklace-charms-pendants-g-5af13249d36887.5708587315257564898659.png'),
-        equipped:false,
-        id:'fearless_amulet'
+        equipped: false,
+        id: 'fearless_amulet',
       },
       {
         type: 'Back',
@@ -76,8 +75,8 @@ export default class Inventory extends Component {
         rarity: 'unique',
         stats: '+10 defence',
         uri: require('./ios/assets/Artwork/Armor/kisspng-cloak-robe-hood-clothing-cloak-5ada92617bf744.3176670515242737615078.png'),
-        equipped:false,
-        id:'cloak_of_shadows'
+        equipped: false,
+        id: 'cloak_of_shadows',
       },
       {
         type: 'Weapon',
@@ -85,8 +84,8 @@ export default class Inventory extends Component {
         rarity: 'rare',
         stats: '+10 physical attack',
         uri: require('./ios/assets/Artwork/Armor/Sword-PNG-File.png'),
-        equipped:false,
-        id:'bane_sword'
+        equipped: false,
+        id: 'bane_sword',
       },
       {
         type: 'Weapon',
@@ -94,8 +93,8 @@ export default class Inventory extends Component {
         rarity: 'rare',
         stats: '+10 physical attack',
         uri: require('./ios/assets/Artwork/Armor/Sword-PNG-File.png'),
-        equipped:false,
-        id:'swag_sword'
+        equipped: false,
+        id: 'swag_sword',
       },
       {
         type: 'Chest',
@@ -103,8 +102,8 @@ export default class Inventory extends Component {
         rarity: 'rare',
         stats: '+10 defence',
         uri: require('./ios/assets/Artwork/Armor/Armor-PNG-Download-Image.png'),
-        equipped:false,
-        id:'dark_souls_chest'
+        equipped: false,
+        id: 'dark_souls_chest',
       },
       {
         type: 'Ring',
@@ -112,8 +111,8 @@ export default class Inventory extends Component {
         rarity: 'rare',
         stats: '+10 defence',
         uri: require('./ios/assets/Artwork/Armor/kisspng-ring-http-cookie-silver-jewellery-platinum-medieval-swords-renaissance-clothing-shields-he-5b6d4ccc2294e9.0120461815338897401417.png'),
-        equipped:false,
-        id:'grandfather_ring'
+        equipped: false,
+        id: 'grandfather_ring',
       },
       {
         type: 'Ring',
@@ -121,8 +120,8 @@ export default class Inventory extends Component {
         rarity: 'rare',
         stats: '+10 defence',
         uri: require('./ios/assets/Artwork/Armor/kisspng-ring-http-cookie-silver-jewellery-platinum-medieval-swords-renaissance-clothing-shields-he-5b6d4ccc2294e9.0120461815338897401417.png'),
-        equipped:false,
-        id:'grandfather_ring1'
+        equipped: false,
+        id: 'grandfather_ring1',
       },
       {
         type: 'Ring',
@@ -130,22 +129,26 @@ export default class Inventory extends Component {
         name: 'ruby ring',
         rarity: 'rare',
         stats: '+10 defence',
-        equipped:'left_ring',
-        id:'ruby_ring'
+        equipped: 'left_ring',
+        id: 'ruby_ring',
       },
     ];
-    console.log('trying to set!')
+    console.log('trying to set!');
     const storeData = async (gear) => {
       try {
         const jsonValue = gear;
 
         await AsyncStorage.setItem('inventory', JSON.stringify(gear)).then(
           (val) => {
-            console.log('inventory saved in inventory.js:' + JSON.stringify(gear));
+            console.log(
+              'inventory saved in inventory.js:' + JSON.stringify(gear),
+            );
           },
         );
       } catch (e) {
-        console.log('inventory NOT saved in inventory.js:' + JSON.stringify(gear));
+        console.log(
+          'inventory NOT saved in inventory.js:' + JSON.stringify(gear),
+        );
         // saving error
       }
     };
@@ -232,7 +235,12 @@ export default class Inventory extends Component {
                 {/* <Text style={styles.text}>{this.state.inventory}</Text>
                 <Text style={styles.words}>{JSON.stringify(item)}</Text> */}
 
-                <TouchableOpacity style={{height:'100%',width:'100%', backgroundColor:'red'}}
+                <TouchableOpacity
+                  style={{
+                    height: '100%',
+                    width: '100%',
+                    // backgroundColor: 'red',
+                  }}
                   onPress={() => {
                     this.toggleModal(true, item);
                   }}>

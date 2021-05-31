@@ -179,23 +179,54 @@ export default class characterSummary extends Component {
     // console.log('viewingGear:'+JSON.stringify(this.state.viewingGear))
     this.setState({modalVisible: false});
     this.setState({modalSwitchVisible: true});
-    // let type = this.state.viewingGear.type;
+
+    let equipTypeCopy = equipType.toString().toLowerCase().replace(' ', '_');
+    if (equipTypeCopy?.includes('_')) {
+      equipTypeCopy = equipTypeCopy.split('_')[1] ? equipTypeCopy.split('_')[1] : sequipTypeCopy ;
+      equipTypeCopy = equipTypeCopy.toLowerCase()
+    }
+    let viewGearTypeCopy = this.state.viewingGear.type;
+    if (viewGearTypeCopy?.includes('_')) {
+      viewGearTypeCopy = viewGearTypeCopy.split('_')[1] ? viewGearTypeCopy.split('_')[1] : viewGearTypeCopy
+      viewGearTypeCopy=viewGearTypeCopy.toLowerCase()
+    }
     let typeFilterdInventory = this.state.inventory.filter((inventoryItem) => {
-      //  console.log('inventoryItem:'+JSON.stringify(inventoryItem))
-      if (inventoryItem?.type.includes(equipType)) {
+      console.log('inventoryItem.type-->:' + JSON.stringify(inventoryItem.type));
+      console.log(
+        'equipTypeCopy---<>:' +
+        equipTypeCopy,
+      );
+      console.log(
+        'viewGearTypeCopy:<><>' + viewGearTypeCopy,
+      );
+
+      if (
+        inventoryItem?.type
+          .toString()
+          .toLowerCase()
+          .replace(' ', '_')
+          .includes(equipTypeCopy)
+      ) {
         return inventoryItem;
       }
-      if (inventoryItem?.type.includes(this.state.viewingGear.type)) {
+      if (
+        inventoryItem?.type
+          .toString()
+          .toLowerCase()
+          .replace(' ', '_')
+          .includes(viewGearTypeCopy)
+      ) {
         return inventoryItem;
       }
-      
     });
-    let viewingGearCopy = JSON.parse(JSON.stringify(this.state.viewingGear))
-    viewingGearCopy.equipped = equipType ? equipType : this.state.viewingGear.type
+    let viewingGearCopy = JSON.parse(JSON.stringify(this.state.viewingGear));
+    viewingGearCopy.equipped = equipType
+      ? equipType
+      : this.state.viewingGear.type;
     this.setState((state, props) => ({
       viewingGear: viewingGearCopy,
     }));
-    
+
     // console.log('available options:'+JSON.stringify(typeFilterdInventory))
     this.setState({typeFilterdInventory: typeFilterdInventory});
   }
@@ -252,10 +283,10 @@ export default class characterSummary extends Component {
       if (inventoryItem.id === idToEquip) {
         inventoryItem.equipped = this.state.viewingGear.equipped;
         let newEquipped = JSON.parse(JSON.stringify(this.state.equippedGear));
-        // let keyType = this.state.viewingGear.equipped ? this.state.viewingGear.equipped : 
-        console.log('hmm???'+JSON.stringify(this.state.viewingGear))
-        newEquipped[this.state.viewingGear.equipped.toLowerCase()] = inventoryItem;
-        console.log('this shouldnt be undefined:'+this.state.viewingGear.equipped)
+        // let keyType = this.state.viewingGear.equipped ? this.state.viewingGear.equipped :
+        newEquipped[
+          this.state.viewingGear.equipped.toLowerCase()
+        ] = inventoryItem;
         this.saveEquipped(JSON.stringify(newEquipped));
       }
       if (inventoryItem.id === this.state.viewingGear.id) {
@@ -385,6 +416,7 @@ export default class characterSummary extends Component {
                     )}
                     <TouchableOpacity
                       onPress={() => {
+                        this.toggleSwitchModal(!this.state.modalSwitchVisible);
                         // this.unequippedById(this.state.viewingGear);
                         this.equipById(item.id);
                       }}>
@@ -511,7 +543,10 @@ export default class characterSummary extends Component {
                 {
                   (this.ensureEquipped(
                     this.state.equippedGear[
-                      gearTitles[index].toString().toLowerCase().replace(' ', '_')
+                      gearTitles[index]
+                        .toString()
+                        .toLowerCase()
+                        .replace(' ', '_')
                     ],
                   ),
                   this.state.equippedGear[
@@ -519,7 +554,7 @@ export default class characterSummary extends Component {
                   ] && (
                     <TouchableOpacity
                       style={{
-                        backgroundColor: 'red',
+                        // backgroundColor: 'red',
                         height: '100%',
                         width: '100%',
                       }}
